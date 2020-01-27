@@ -19,13 +19,13 @@ public class MainActivity extends AppCompatActivity {
 
     CustomAdapter customAdapter;
     MainActivityViewModel mainActivityViewModel;
-
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        recyclerView = findViewById(R.id.recyclerView);
 
         mainActivityViewModel = ViewModelProviders.of(this)
                 .get(MainActivityViewModel.class);
@@ -37,9 +37,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        customAdapter = new CustomAdapter(this, mainActivityViewModel.getMutableLiveData().getValue());
+        initRecylerView();
+
+    }
+
+    public void initRecylerView() {
+        customAdapter = new CustomAdapter(getApplicationContext(), mainActivityViewModel.getMutableLiveData().getValue());
         recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
     }
 }

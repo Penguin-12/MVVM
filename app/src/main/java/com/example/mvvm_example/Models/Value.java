@@ -1,27 +1,34 @@
+
 package com.example.mvvm_example.Models;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Value {
 
+    @SerializedName("id")
+    @Expose
     private Integer id;
+    @SerializedName("joke")
+    @Expose
     private String joke;
-    private List<Object> categories = null;
-
-    public Value(String joke) {
-        this.joke = joke;
-    }
+    @SerializedName("categories")
+    @Expose
+    private List<String> categories = null;
 
     public Integer getId() {
         return id;
     }
 
-    public String getJoke() {
 
+    public String getJoke() {
         return joke;
     }
 
-    public List<Object> getCategories() {
+
+    public List<String> getCategories() {
         return categories;
     }
 

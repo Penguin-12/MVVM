@@ -1,13 +1,18 @@
+
 package com.example.mvvm_example.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Joke {
 
-
+    @SerializedName("type")
+    @Expose
     private String type;
-
+    @SerializedName("value")
+    @Expose
     private List<Value> value = null;
 
     public String getType() {
@@ -20,7 +25,4 @@ public class Joke {
     }
 
 
-    public void setValue(List<Value> value) {
-        this.value = value;
-    }
 }

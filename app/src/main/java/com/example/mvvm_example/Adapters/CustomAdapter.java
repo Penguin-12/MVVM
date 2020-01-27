@@ -39,6 +39,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         holder.textView.setText(list.get(position).getJoke());
     }
 
+
     @Override
     public int getItemCount() {
         return list.size();

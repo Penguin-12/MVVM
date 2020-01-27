@@ -9,7 +9,7 @@ public interface JokesApi {
 
     String BASE_URl = "http://api.icndb.com/jokes/";
 
-    @GET("random")
+    @GET("random/15")
     Call<Joke> getJoke();
 
 }

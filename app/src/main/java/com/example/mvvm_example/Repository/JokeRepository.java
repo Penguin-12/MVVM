@@ -8,6 +8,7 @@ import com.example.mvvm_example.JokesApi;
 import com.example.mvvm_example.Models.Joke;
 import com.example.mvvm_example.Models.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class JokeRepository {
     static JokeRepository instance;
     Joke joke;
+    List<Value> list = new ArrayList<>();
 
 
     public static JokeRepository getInstance() {
@@ -31,7 +33,7 @@ public class JokeRepository {
     public MutableLiveData<List<Value>> getJokeValueList() {
         setJoke();
         MutableLiveData<List<Value>> mutableLiveData = new MutableLiveData<>();
-        mutableLiveData.setValue(joke.getValue());
+        mutableLiveData.setValue(list);
         return mutableLiveData;
 
     }
@@ -45,7 +47,9 @@ public class JokeRepository {
             @Override
             public void onResponse(Call<Joke> call, Response<Joke> response) {
                 joke = response.body();
-                Log.i("Success", "Success");
+                list = joke.getValue();
+
+                Log.i("Success", list.toString());
             }
 
             @Override
