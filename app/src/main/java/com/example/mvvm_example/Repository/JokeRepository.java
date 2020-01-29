@@ -1,12 +1,15 @@
 package com.example.mvvm_example.Repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
-import com.example.mvvm_example.JokesApi;
 import com.example.mvvm_example.Models.Joke;
+import com.example.mvvm_example.Models.JokesApi;
 import com.example.mvvm_example.Models.Value;
+import com.example.mvvm_example.Room.AppDatatbase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +24,13 @@ public class JokeRepository {
     static JokeRepository instance;
     Joke joke;
     List<Value> list = new ArrayList<>();
+    static AppDatatbase appDatatbase;
+    static Context context;
+    MutableLiveData<List<Value>> mutableLiveData = new MutableLiveData<>();
 
-
-    public static JokeRepository getInstance() {
+    public static JokeRepository getInstance(Context context) {
+        JokeRepository.context = context;
+        appDatatbase = Room.databaseBuilder(context, AppDatatbase.class, "hey").allowMainThreadQueries().build();
         if (instance == null) {
             instance = new JokeRepository();
         }
@@ -32,8 +39,7 @@ public class JokeRepository {
 
     public MutableLiveData<List<Value>> getJokeValueList() {
         setJoke();
-        MutableLiveData<List<Value>> mutableLiveData = new MutableLiveData<>();
-        mutableLiveData.setValue(list);
+        mutableLiveData.setValue(appDatatbase.jokeValueDao().getAllJokes());
         return mutableLiveData;
 
     }
@@ -48,7 +54,8 @@ public class JokeRepository {
             public void onResponse(Call<Joke> call, Response<Joke> response) {
                 joke = response.body();
                 list = joke.getValue();
-
+                emptyRoom();
+                fillRoom(response);
                 Log.i("Success", list.toString());
             }
 
@@ -58,5 +65,14 @@ public class JokeRepository {
             }
         });
 
+    }
+
+    public void fillRoom(Response<Joke> response) {
+        appDatatbase.jokeValueDao().insertJokes(response.body().getValue());
+    }
+
+
+    public void emptyRoom() {
+        appDatatbase.jokeValueDao().emptyDatabse();
     }
 }

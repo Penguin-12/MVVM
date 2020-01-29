@@ -1,6 +1,4 @@
-package com.example.mvvm_example;
-
-import com.example.mvvm_example.Models.Joke;
+package com.example.mvvm_example.Models;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -9,7 +7,7 @@ public interface JokesApi {
 
     String BASE_URl = "http://api.icndb.com/jokes/";
 
-    @GET("random/15")
+    @GET("random/100")
     Call<Joke> getJoke();
 
 }

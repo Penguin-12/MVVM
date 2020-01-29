@@ -15,7 +15,7 @@ import com.example.mvvm_example.R;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
-    List<Value> list;
+    public List<Value> list;
     Context context;
 
     public CustomAdapter(Context context, List<Value> list) {

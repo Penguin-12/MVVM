@@ -26,14 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
+        setTitle("Chuck Norris Jokes");
 
         mainActivityViewModel = ViewModelProviders.of(this)
                 .get(MainActivityViewModel.class);
-        mainActivityViewModel.init();
+        mainActivityViewModel.init(getApplicationContext());
         mainActivityViewModel.getMutableLiveData().observe(this, new Observer<List<Value>>() {
             @Override
             public void onChanged(List<Value> jokes) {
                 customAdapter.notifyDataSetChanged();
+                customAdapter.list = jokes;
             }
         });
 
